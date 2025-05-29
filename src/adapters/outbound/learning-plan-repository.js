@@ -5,7 +5,7 @@
  *
  * @type {*}
  */
-const LearningPlanModel = require('./models/LearningPlan.js');
+const LearningPlanModel = require('./models/Learning-plan.js');
 
 /**
  * Description placeholder
