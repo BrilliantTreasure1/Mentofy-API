@@ -1,6 +1,22 @@
+/**
+ * Description placeholder
+ *
+ * @type {*}
+ */
 const express = require('express');
+/**
+ * Description placeholder
+ *
+ * @type {*}
+ */
 const cors = require('cors');
 
+/**
+ * Description placeholder
+ *
+ * @param {*} learningPlanService 
+ * @returns {*} 
+ */
 function createHttpServer(learningPlanService) {
   const app = express();
 
@@ -11,7 +27,6 @@ function createHttpServer(learningPlanService) {
     try {
       const { name, goal, level, dailyTime } = req.body;
 
-      // اعتبارسنجی ساده
       if (!name || !goal || !level || !dailyTime) {
         return res.status(400).json({ error: 'لطفاً همه فیلدها را وارد کنید.' });
       }

@@ -1,5 +1,15 @@
 // src/config/env.js
+/**
+ * Description placeholder
+ *
+ * @type {*}
+ */
 const path = require('path');
+/**
+ * Description placeholder
+ *
+ * @type {*}
+ */
 const dotenv = require('dotenv');
 
 dotenv.config({ path: path.resolve(__dirname, '../../../.env') });

@@ -1,8 +1,33 @@
+/**
+ * Description placeholder
+ *
+ * @type {*}
+ */
 const axios = require('axios');
+/**
+ * Description placeholder
+ *
+ * @type {*}
+ */
 const { OPENROUTER_URL, API_KEY } = require('../../config/env');
 
+/**
+ * Description placeholder
+ *
+ * @class OpenRouterApi
+ * @typedef {OpenRouterApi}
+ */
 class OpenRouterApi {
-  async createChatCompletion({ model, messages }) {
+  /**
+ * Description placeholder
+ *
+ * @async
+ * @param {{ model: any; messages: any; }} param0 
+ * @param {*} param0.model 
+ * @param {*} param0.messages 
+ * @returns {unknown} 
+ */
+async createChatCompletion({ model, messages }) {
     try {
       const response = await axios.post(
         OPENROUTER_URL,

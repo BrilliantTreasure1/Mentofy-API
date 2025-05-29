@@ -5,7 +5,14 @@ class LearningPlanService {
       this.cache = cache;
     }
   
-    async generateAndSavePlan(data) {
+    /**
+ * Description placeholder
+ *
+ * @async
+ * @param {*} data 
+ * @returns {unknown} 
+ */
+async generateAndSavePlan(data) {
       const { email, name, goal, level, dailyTime } = data;
       const cacheKey = `${email}-${name}-${goal}-${level}-${dailyTime}`;
   

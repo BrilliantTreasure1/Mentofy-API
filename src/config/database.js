@@ -1,5 +1,16 @@
+/**
+ * Description placeholder
+ *
+ * @type {*}
+ */
 const mongoose = require('mongoose');
 
+/**
+ * Description placeholder
+ *
+ * @async
+ * @returns {*} 
+ */
 async function connectToDatabase() {
   try {
     await mongoose.connect(process.env.MONGO_URI, {
