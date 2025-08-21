@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const createLearningPlanRoutes = require('./routes/ learning-plan-routes');
+const userRoutes = require('./routes/sign-up-route');
 
 function createHttpServer(learningPlanService) {
   const app = express();
@@ -10,7 +11,8 @@ function createHttpServer(learningPlanService) {
   // Mount routes
   app.use('/learning-plan', createLearningPlanRoutes(learningPlanService));
 
-  
+  app.use('/', userRoutes);
+
 
   return app;
 }
