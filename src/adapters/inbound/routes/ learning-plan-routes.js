@@ -12,7 +12,7 @@ module.exports = (learningPlanService) => {
         return res.status(400).json({ error: 'لطفاً همه فیلدها را وارد کنید.' });
       }
 
-      const plan = await learningPlanService.generatePlan({ name, goal, level, dailyTime });
+      const plan = await learningPlanService.generateAndSavePlan({ name, goal, level, dailyTime });
       res.json({ plan });
     } catch (err) {
       res.status(500).json({ error: err.message });

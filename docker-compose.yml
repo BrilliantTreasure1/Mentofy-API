@@ -32,7 +32,7 @@ services:
 
   backend:
     build:
-      context: ./back-end
+      context: .
       dockerfile: Dockerfile
     container_name: mentofy-backend
     restart: unless-stopped
