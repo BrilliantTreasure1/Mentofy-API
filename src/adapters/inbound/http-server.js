@@ -1,42 +1,16 @@
-/**
- * Description placeholder
- *
- * @type {*}
- */
 const express = require('express');
-/**
- * Description placeholder
- *
- * @type {*}
- */
 const cors = require('cors');
+const createLearningPlanRoutes = require('./routes/ learning-plan-routes');
 
-/**
- * Description placeholder
- *
- * @param {*} learningPlanService 
- * @returns {*} 
- */
 function createHttpServer(learningPlanService) {
   const app = express();
-
   app.use(express.json());
   app.use(cors());
 
-  app.post('/generate-plan', async (req, res) => {
-    try {
-      const { name, goal, level, dailyTime } = req.body;
+  // Mount routes
+  app.use('/learning-plan', createLearningPlanRoutes(learningPlanService));
 
-      if (!name || !goal || !level || !dailyTime) {
-        return res.status(400).json({ error: 'لطفاً همه فیلدها را وارد کنید.' });
-      }
-
-      const plan = await learningPlanService.generatePlan({ name, goal, level, dailyTime });
-      res.json({ plan });
-    } catch (err) {
-      res.status(500).json({ error: err.message });
-    }
-  });
+  
 
   return app;
 }
