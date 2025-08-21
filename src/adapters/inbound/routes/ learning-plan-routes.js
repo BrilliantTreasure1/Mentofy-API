@@ -1,8 +1,10 @@
 const express = require('express');
 const router = express.Router();
 
+const authMiddleware = require('../Controller/JWT-Middleware');
+
 module.exports = (learningPlanService) => {
-  router.post('/generate-plan', async (req, res) => {
+  router.post('/generate-plan',authMiddleware ,async (req, res) => {
     try {
       const { name, goal, level, dailyTime } = req.body;
 
