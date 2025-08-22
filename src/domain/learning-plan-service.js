@@ -1,3 +1,5 @@
+const { parsePlan } = require("../Middleware/planParser");
+
 class LearningPlanService {
     constructor(openRouterApi, learningPlanModel, cache) {
       this.openRouterApi = openRouterApi;
@@ -29,11 +31,13 @@ async generateAndSavePlan(data , userId) {
       ];
   
       const plan = await this.openRouterApi.createChatCompletion({ model: 'microsoft/mai-ds-r1:free', messages });
+
+      const structuredPlan = parsePlan(plan);
   
-      // ذخیره در کش
+      // save in cache
       this.cache.set(cacheKey, plan);
   
-       // ✅ ذخیره در دیتابیس
+       // save in database
     if (this.learningPlanModel) {
       await this.learningPlanModel.create({
         userId,
@@ -42,11 +46,12 @@ async generateAndSavePlan(data , userId) {
         goal,
         level,
         dailyTime,
-        plan
+        plan,
+        structuredPlan,
       });
     }
   
-      return plan;
+      return structuredPlan;
     }
   }
   

@@ -18,6 +18,7 @@ const LearningPlanSchema = new mongoose.Schema({
   dailyTime: Number,
   email: { type: String, },
   plan: String,
+  structuredPlan: Object,
   createdAt: { type: Date, default: Date.now }
 });
 
