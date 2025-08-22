@@ -12,7 +12,7 @@ class LearningPlanService {
  * @param {*} data 
  * @returns {unknown} 
  */
-async generateAndSavePlan(data) {
+async generateAndSavePlan(data , userId) {
       const { email, name, goal, level, dailyTime } = data;
       const cacheKey = `${email}-${name}-${goal}-${level}-${dailyTime}`;
   
@@ -36,6 +36,7 @@ async generateAndSavePlan(data) {
        // ✅ ذخیره در دیتابیس
     if (this.learningPlanModel) {
       await this.learningPlanModel.create({
+        userId,
         email,
         name,
         goal,
