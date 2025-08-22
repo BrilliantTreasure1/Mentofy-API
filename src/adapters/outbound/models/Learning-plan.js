@@ -11,6 +11,7 @@ const mongoose = require('mongoose');
  * @type {*}
  */
 const LearningPlanSchema = new mongoose.Schema({
+  userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
   name: String,
   goal: String,
   level: String,
