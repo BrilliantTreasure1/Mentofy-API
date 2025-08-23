@@ -1,43 +1,47 @@
 function parsePlan(rawText) {
-    const lines = rawText.split("\n").map(l => l.trim()).filter(Boolean);
-  
-    const result = { months: [] };
-    let currentMonth = null;
-    let currentWeek = null;
-    let currentDay = null;
-  
-    for (const line of lines) {
-      if (line.startsWith("### ماه")) {
-        // شروع ماه جدید
-        currentMonth = { name: line.replace("###", "").trim(), weeks: [] };
-        result.months.push(currentMonth);
-      } else if (line.startsWith("### هفته")) {
-        // شروع هفته جدید
-        currentWeek = { name: line.replace("###", "").trim(), days: [] };
-        currentMonth.weeks.push(currentWeek);
-      } else if (/^-\s*روز/.test(line)) {
-        // شروع روز جدید
-        currentDay = {
-          name: line.replace("-", "").trim(),
-          task: "",
-          exercise: ""
-        };
-        currentWeek.days.push(currentDay);
-      } else if (line.startsWith("- مطالعه") || line.startsWith("- نصب") || line.startsWith("- تمرین") || line.startsWith("- اجرای")) {
-        // تسک اصلی
-        if (currentDay) {
-          currentDay.task += (currentDay.task ? " " : "") + line.replace("-", "").trim();
-        }
-      } else if (line.startsWith("تمرین:")) {
-        // تمرین
-        if (currentDay) {
-          currentDay.exercise += (currentDay.exercise ? " " : "") + line.replace("تمرین:", "").trim();
-        }
-      }
+  const structuredPlan = { months: [], tips: [] };
+  const lines = rawText.split('\n').map(l => l.trim()).filter(Boolean);
+
+  let currentMonth = null;
+  let currentWeek = null;
+
+  lines.forEach(line => {
+    // ماه
+    const monthMatch = line.match(/ماه\s*\d+/);
+    if (monthMatch) {
+      if (currentMonth) structuredPlan.months.push(currentMonth);
+      currentMonth = { name: line, weeks: [] };
+      currentWeek = null;
+      return;
     }
-  
-    return result;
-  }
-  
-  module.exports = { parsePlan };
-  
+
+    // هفته
+    const weekMatch = line.match(/هفته\s*\d+/);
+    if (weekMatch && currentMonth) {
+      currentWeek = { name: line, days: [] };
+      currentMonth.weeks.push(currentWeek);
+      return;
+    }
+
+    // روز
+    const dayMatch = line.match(/روز\s*[\d\w]+[:\s]/);
+    if (dayMatch && currentWeek) {
+      currentWeek.days.push({ day: dayMatch[0], exercise: line.replace(dayMatch[0], '').trim(), description: '' });
+      return;
+    }
+
+    // نکات تکمیلی
+    if (/نکات تکمیلی/i.test(line)) {
+      const tipsIndex = lines.indexOf(line);
+      structuredPlan.tips = lines.slice(tipsIndex + 1).filter(l => l && /^\d+/.test(l));
+      return;
+    }
+  });
+
+  if (currentMonth) structuredPlan.months.push(currentMonth);
+
+  return structuredPlan;
+}
+
+
+module.exports = {parsePlan};
